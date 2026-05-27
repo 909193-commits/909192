@@ -1,8 +1,7 @@
 /* ==========================================
-   2026 電腦螢幕評分系統 專用全域樣式
+   2026 電腦螢幕評分系統 全域樣式
    ========================================== */
 
-/* 基礎設定與深色背景 */
 body {
     background-color: #121824;
     color: #e5e7eb;
@@ -11,7 +10,7 @@ body {
     padding: 0;
 }
 
-/* 網頁頂部標頭 */
+/* 網頁標頭 */
 .site-header {
     background-color: #1e293b;
     border-bottom: 1px solid #334155;
@@ -40,9 +39,7 @@ body {
     padding: 32px 16px;
 }
 
-/* ==========================================
-   工具列：篩選與排序
-   ========================================== */
+/* 工具列：篩選與排序區 */
 .filter-bar {
     background-color: #1e293b;
     padding: 20px;
@@ -98,9 +95,7 @@ body {
     border: 1px solid #1e293b;
 }
 
-/* ==========================================
-   螢幕卡片網格與卡片樣式
-   ========================================== */
+/* 螢幕卡片網格 */
 .monitor-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -125,7 +120,7 @@ body {
     border-color: #38bdf8;
 }
 
-/* 2026 排名標籤 */
+/* 排名標籤 */
 .rank-badge {
     position: absolute;
     top: 12px;
@@ -161,7 +156,7 @@ body {
     margin: 0 0 16px 0;
 }
 
-/* 核心規格數據區（尺寸、銷量、評分） */
+/* 數據核心區 */
 .specs-badge-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -183,7 +178,7 @@ body {
 .spec-sales { color: #4ade80; font-weight: 600; font-size: 14px; }
 .spec-score { color: #facc15; font-weight: 600; font-size: 14px; }
 
-/* 卡片底部區 */
+/* 卡片底部 */
 .card-footer {
     background-color: #172237;
     padding: 16px 24px;
@@ -222,7 +217,7 @@ body {
     background-color: #3b82f6;
 }
 
-/* 載入與無數據提示 */
+/* 狀態提示 */
 .status-msg {
     text-align: center;
     color: #94a3b8;
