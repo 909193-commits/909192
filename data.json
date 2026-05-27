@@ -1,0 +1,80 @@
+[
+    {
+        "id": 1,
+        "name": "LG UltraGear 27GR95QE",
+        "brand": "LG",
+        "size": 27,
+        "price": 26900,
+        "sales": 1450,
+        "rank_2026": 1,
+        "system_score": 98,
+        "resolution": "2K QHD",
+        "refresh_rate": "240Hz",
+        "panel": "OLED"
+    },
+    {
+        "id": 2,
+        "name": "SAMSUNG Odyssey Odyssey G7",
+        "brand": "SAMSUNG",
+        "size": 32,
+        "price": 18900,
+        "sales": 1820,
+        "rank_2026": 2,
+        "system_score": 95,
+        "resolution": "2K QHD",
+        "refresh_rate": "240Hz",
+        "panel": "VA 曲面"
+    },
+    {
+        "id": 3,
+        "name": "ASUS ROG Swift PG32UCDM",
+        "brand": "ASUS",
+        "size": 32,
+        "price": 42900,
+        "sales": 680,
+        "rank_2026": 3,
+        "system_score": 97,
+        "resolution": "4K UHD",
+        "refresh_rate": "240Hz",
+        "panel": "QD-OLED"
+    },
+    {
+        "id": 4,
+        "name": "BenQ Mobiuz EX2710Q",
+        "brand": "BenQ",
+        "size": 27,
+        "price": 8988,
+        "sales": 2300,
+        "rank_2026": 4,
+        "system_score": 89,
+        "resolution": "2K QHD",
+        "refresh_rate": "165Hz",
+        "panel": "IPS"
+    },
+    {
+        "id": 5,
+        "name": "GIGABYTE M34WQ",
+        "brand": "GIGABYTE",
+        "size": 34,
+        "price": 12990,
+        "sales": 1100,
+        "rank_2026": 5,
+        "system_score": 91,
+        "resolution": "UWQHD",
+        "refresh_rate": "144Hz",
+        "panel": "IPS 帶魚屏"
+    },
+    {
+        "id": 6,
+        "name": "MSI G244F E2",
+        "brand": "MSI",
+        "size": 24,
+        "price": 3990,
+        "sales": 3400,
+        "rank_2026": 6,
+        "system_score": 85,
+        "resolution": "FHD",
+        "refresh_rate": "180Hz",
+        "panel": "Rapid IPS"
+    }
+]
