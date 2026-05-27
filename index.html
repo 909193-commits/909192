@@ -1,133 +1,86 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 電腦螢幕評分與排名系統</title>
-    <!-- 引入 Tailwind CSS 實現精美現代 UI -->
-    <script src="https://tailwindcss.com"></script>
-</head>
-<body class="bg-gray-900 text-gray-100 min-h-screen">
+<script>
+    // 讀取與 index.html 放在同一個 GitHub 倉庫下的 data.json
+    const API_URL = './data.json'; 
+    let allMonitors = []; // 用來儲存從 JSON 載入的原始數據
 
-    <!-- 頂部導航欄 -->
-    <header class="bg-gray-800 border-b border-gray-700 py-6 text-center">
-        <h1 class="text-3xl font-extrabold text-blue-400 tracking-wider">🖥️ 2026 電腦螢幕智慧評分系統</h1>
-        <p class="text-gray-400 mt-2 text-sm">即時匯總價格、尺寸、銷量與大數據評分排行</p>
-    </header>
+    // 網頁載入時，先去抓取一次 JSON 資料
+    async function loadData() {
+        try {
+            const response = await fetch(API_URL);
+            allMonitors = await response.json();
+            // 載入完畢後，執行第一次的渲染
+            fetchMonitors(); 
+        } catch (error) {
+            console.error("無法取得 JSON 數據:", error);
+            document.getElementById('monitorList').innerHTML = 
+                '<p class="status-msg" style="color: #f43f5e;">無法載入數據，請確認 data.json 是否上傳成功。</p>';
+        }
+    }
 
-    <!-- 主體內容 -->
-    <main class="container mx-auto px-4 py-8">
+    // 負責處理前端篩選、排序與畫面渲染的函數
+    function fetchMonitors() {
+        const sizeFilter = document.getElementById('sizeFilter').value;
+        const sortBy = document.getElementById('sortBy').value;
+        const monitorList = document.getElementById('monitorList');
         
-        <!-- 篩選與排序工具列 -->
-        <section class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8 flex flex-wrap gap-4 items-center justify-between">
-            <div class="flex flex-wrap gap-4">
-                <!-- 尺寸篩選 -->
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1">螢幕大小</label>
-                    <select id="sizeFilter" onchange="fetchMonitors()" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        <option value="all">全部尺寸</option>
-                        <option value="24">24 吋</option>
-                        <option value="27">27 吋</option>
-                        <option value="32">32 吋</option>
-                        <option value="34">34 吋以上</option>
-                    </select>
-                </div>
-                <!-- 排序規則 -->
-                <div>
-                    <label class="block text-xs font-semibold text-gray-400 mb-1">排序依據</label>
-                    <select id="sortBy" onchange="fetchMonitors()" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500">
-                        <option value="rank">2026 綜合排名</option>
-                        <option value="price_asc">價格：由低到高</option>
-                        <option value="price_desc">價格：由高到低</option>
-                        <option value="sales">銷量：由高到低</option>
-                        <option value="score">系統評分：由高到低</option>
-                    </select>
-                </div>
-            </div>
-            <div class="text-xs text-gray-400 bg-gray-900 px-3 py-2 rounded border border-gray-700">
-                💡 系統評分演算法：綜合解析度、更新率、面板與價格權衡計算。
-            </div>
-        </section>
+        // 1. 複製一份資料進行處理，避免污染原始數據
+        let displayData = [...allMonitors];
 
-        <!-- 螢幕列表展示區 -->
-        <section id="monitorList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- 這裡會透過 JavaScript 動態渲染後端數據 -->
-        </section>
-    </main>
-
-    <!-- 前端動態交互 JavaScript -->
-    <script>
-        const API_URL = 'http://127.0.0';
-
-        async function fetchMonitors() {
-            const size = document.getElementById('sizeFilter').value;
-            const sort = document.getElementById('sortBy').value;
-            const monitorList = document.getElementById('monitorList');
-            
-            // 清空舊數據並顯示載入中
-            monitorList.innerHTML = '<p class="text-center text-gray-400 col-span-full">數據載入中...</p>';
-
-            try {
-                // 向 Python 後端發送帶有篩選與排序參數的請求
-                const response = await fetch(`${API_URL}?size=${size}&sort=${sort}`);
-                const data = await response.json();
-
-                if (data.length === 0) {
-                    monitorList.innerHTML = '<p class="text-center text-gray-400 col-span-full">查無符合條件的螢幕</p>';
-                    return;
-                }
-
-                // 動態生成螢幕卡片 HTML
-                monitorList.innerHTML = data.map((monitor, index) => `
-                    <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-lg hover:border-blue-500 transition duration-300 relative flex flex-col justify-between">
-                        <!-- 2026 排名標籤 -->
-                        <div class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
-                            2026 排名 #${monitor.rank_2026}
-                        </div>
-                        
-                        <!-- 內文資訊 -->
-                        <div class="p-6 pt-12">
-                            <h3 class="text-lg font-bold text-white mb-1 line-clamp-1">${monitor.name}</h3>
-                            <p class="text-xs text-gray-400 mb-4">${monitor.panel} | ${monitor.resolution} | ${monitor.refresh_rate}</p>
-                            
-                            <!-- 主要規格 -->
-                            <div class="grid grid-cols-3 gap-2 text-center bg-gray-900 p-3 rounded-lg text-sm mb-4">
-                                <div>
-                                    <span class="block text-xs text-gray-500">尺寸</span>
-                                    <span class="font-semibold text-blue-400">${monitor.size} 吋</span>
-                                </div>
-                                <div>
-                                    <span class="block text-xs text-gray-500">月銷量</span>
-                                    <span class="font-semibold text-green-400">${monitor.sales.toLocaleString()} 筆</span>
-                                </div>
-                                <div>
-                                    <span class="block text-xs text-gray-500">系統評分</span>
-                                    <span class="font-semibold text-yellow-400">${monitor.system_score} / 100</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 底部價格與評分 -->
-                        <div class="bg-gray-750 px-6 py-4 border-t border-gray-700 flex items-center justify-between bg-gray-850">
-                            <div>
-                                <span class="text-xs text-gray-400 block">促銷價</span>
-                                <span class="text-xl font-black text-rose-500">NT$ ${monitor.price.toLocaleString()}</span>
-                            </div>
-                            <button class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded transition">
-                                查看詳細評測
-                            </button>
-                        </div>
-                    </div>
-                `).join('');
-
-            } catch (error) {
-                console.error("無法取得後端數據:", error);
-                monitorList.innerHTML = '<p class="text-center text-rose-400 col-span-full">後端伺服器連接失敗，請確認 Flask 是否啟動。</p>';
+        // 2. 在前端執行尺寸篩選
+        if (sizeFilter !== 'all') {
+            if (sizeFilter === '34') {
+                displayData = displayData.filter(m => m.size >= 34);
+            } else {
+                displayData = displayData.filter(m => m.size === parseInt(sizeFilter));
             }
         }
 
-        // 網頁開啟時自動載入數據
-        window.onload = fetchMonitors;
-    </script>
-</body>
-</html>
+        // 3. 在前端執行動態排序
+        if (sortBy === 'rank') {
+            displayData.sort((a, b) => a.rank_2026 - b.rank_2026);
+        } else if (sortBy === 'price_asc') {
+            displayData.sort((a, b) => a.price - b.price);
+        } else if (sortBy === 'price_desc') {
+            displayData.sort((a, b) => b.price - a.price);
+        } else if (sortBy === 'sales') {
+            displayData.sort((a, b) => b.sales - a.sales);
+        } else if (sortBy === 'score') {
+            displayData.sort((a, b) => b.system_score - a.system_score);
+        }
+
+        // 4. 檢查是否有結果
+        if (displayData.length === 0) {
+            monitorList.innerHTML = '<p class="status-msg">查無符合條件的螢幕</p>';
+            return;
+        }
+
+        // 5. 渲染成 HTML 卡片
+        monitorList.innerHTML = displayData.map(monitor => `
+            <div class="monitor-card">
+                <div class="rank-badge">2026 排名 #${monitor.rank_2026}</div>
+                
+                <div class="card-body">
+                    <h3 class="card-title">${monitor.name}</h3>
+                    <p class="card-subtitle">${monitor.panel} | ${monitor.resolution} | ${monitor.refresh_rate}</p>
+                    
+                    <div class="specs-badge-container">
+                        <div class="spec-item"><span>尺寸</span><span class="spec-size">${monitor.size} 吋</span></div>
+                        <div class="spec-item"><span>月銷量</span><span class="spec-sales">${monitor.sales.toLocaleString()} 筆</span></div>
+                        <div class="spec-item"><span>評分</span><span class="spec-score">${monitor.system_score}分</span></div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="price-box">
+                        <span>促銷價</span>
+                        <span class="price-value">NT$ ${monitor.price.toLocaleString()}</span>
+                    </div>
+                    <button class="btn-detail">查看評測</button>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // 網頁開啟時改為觸發 loadData
+    window.onload = loadData;
+</script>
