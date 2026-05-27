@@ -3,368 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2026 全球電腦螢幕智慧評分系統</title>
-    <style>
-        :root {
-            --primary-color: #2563eb;
-            --secondary-color: #1e40af;
-            --background-color: #f8fafc;
-            --card-background: #ffffff;
-            --text-color: #1e293b;
-            --border-color: #e2e8f0;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: var(--background-color);
-            color: var(--text-color);
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding: 20px;
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-
-        header h1 {
-            margin-bottom: 10px;
-        }
-
-        /* 篩選與排序控制區 */
-        .controls-panel {
-            background: var(--card-background);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-            margin-bottom: 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            align-items: center;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .control-group label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #64748b;
-        }
-
-        .control-group select, .control-group input {
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 0.95rem;
-            outline: none;
-        }
-
-        .control-group select:focus, .control-group input:focus {
-            border-color: var(--primary-color);
-        }
-
-        /* 螢幕卡片列表 */
-        .monitor-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-            gap: 25px;
-        }
-
-        .monitor-card {
-            background: var(--card-background);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05);
-            transition: transform 0.2s, box-shadow 0.2s;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .monitor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        /* 2026 排名標籤 */
-        .rank-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #f59e0b;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.85rem;
-            z-index: 10;
-        }
-
-        .monitor-info {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-
-        .monitor-name {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            color: #0f172a;
-            line-height: 1.4;
-        }
-
-        .specs-tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: #f1f5f9;
-            color: #475569;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .data-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .data-label {
-            color: #64748b;
-        }
-
-        .data-value {
-            font-weight: 600;
-        }
-
-        /* 智慧評分系統樣式 */
-        .score-box {
-            background: #eff6ff;
-            border: 1px dashed #bfdbfe;
-            border-radius: 8px;
-            padding: 12px;
-            margin-top: 15px;
-            text-align: center;
-        }
-
-        .score-title {
-            font-size: 0.85rem;
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .score-value {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: var(--secondary-color);
-        }
-
-        .price-highlight {
-            color: #ef4444;
-            font-size: 1.1rem;
-        }
-    </style>
+    <title>2026 電腦螢幕評分與排名系統</title>
+    <!-- 引入 Tailwind CSS 實現精美現代 UI -->
+    <script src="https://tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-900 text-gray-100 min-h-screen">
 
-<div class="container">
-    <header>
-        <h1>2026 電腦螢幕大數據評分網站</h1>
-        <p>即時整合價格、尺寸、銷量與專家權威排名，計算客觀綜合性評分</p>
+    <!-- 頂部導航欄 -->
+    <header class="bg-gray-800 border-b border-gray-700 py-6 text-center">
+        <h1 class="text-3xl font-extrabold text-blue-400 tracking-wider">🖥️ 2026 電腦螢幕智慧評分系統</h1>
+        <p class="text-gray-400 mt-2 text-sm">即時匯總價格、尺寸、銷量與大數據評分排行</p>
     </header>
 
-    <!-- 智慧篩選與排序控制面版 -->
-    <div class="controls-panel">
-        <div class="control-group">
-            <label for="search-input">搜尋型號/品牌</label>
-            <input type="text" id="search-input" placeholder="例如：ASUS, LG..." oninput="renderMonitors()">
-        </div>
-        <div class="control-group">
-            <label for="size-filter">螢幕大小 (尺寸)</label>
-            <select id="size-filter" onchange="renderMonitors()">
-                <option value="all">全部尺寸</option>
-                <option value="24">24 吋 - 25 吋</option>
-                <option value="27">27 吋 - 28 吋</option>
-                <option value="32">32 吋以上</option>
-            </select>
-        </div>
-        <div class="control-group">
-            <label for="sort-select">資料排序依據</label>
-            <select id="sort-select" onchange="renderMonitors()">
-                <option value="rank">2026 年綜合排名 (熱門)</option>
-                <option value="score">系統核心評分 (高到低)</option>
-                <option value="price-asc">價格低到高</option>
-                <option value="price-desc">價格高到低</option>
-                <option value="sales">市場銷量 (高到低)</option>
-            </select>
-        </div>
-    </div>
-
-    <!-- 螢幕展示區域 -->
-    <div class="monitor-grid" id="monitor-container">
-        <!-- 由 JavaScript 自動動態生成內容 -->
-    </div>
-</div>
-
-<script>
-    // 預載 2026 年最新主流電腦螢幕數據庫 (包含價格、大小、銷量、排名)
-    const monitorDatabase = [
-        {
-            id: 1,
-            rank2026: 1,
-            brand: "LG",
-            model: "UltraGear 27GR95QE",
-            size: 27,
-            panel: "OLED",
-            resolution: "2K QHD",
-            refreshRate: "240Hz",
-            price: 26900,
-            monthlySales: 1240, // 月銷量
-            expertReviewScore: 9.6 // 專業評測分
-        },
-        {
-            id: 2,
-            rank2026: 2,
-            brand: "ASUS",
-            model: "ROG Swift PG32UCDM",
-            size: 32,
-            panel: "QD-OLED",
-            resolution: "4K UHD",
-            refreshRate: "240Hz",
-            price: 42900,
-            monthlySales: 850,
-            expertReviewScore: 9.8
-        },
-        {
-            id: 3,
-            rank2026: 3,
-            brand: "SAMSUNG",
-            model: "Odyssey G6 G65B",
-            size: 32,
-            panel: "VA 曲面",
-            resolution: "2K QHD",
-            refreshRate: "240Hz",
-            price: 13900,
-            monthlySales: 2100,
-            expertReviewScore: 8.7
-        },
-        {
-            id: 4,
-            rank2026: 4,
-            brand: "BenQ",
-            model: "MOBIUZ EX2710Q",
-            size: 27,
-            panel: "IPS",
-            resolution: "2K QHD",
-            refreshRate: "165Hz",
-            price: 8988,
-            monthlySales: 3400,
-            expertReviewScore: 8.9
-        },
-        {
-            id: 5,
-            rank2026: 5,
-            brand: "GIGABYTE",
-            model: "GS27F",
-            size: 27,
-            panel: "IPS",
-            resolution: "1080P FHD",
-            refreshRate: "165Hz",
-            price: 4990,
-            monthlySales: 4500,
-            expertReviewScore: 8.2
-        },
-        {
-            id: 6,
-            rank2026: 6,
-            brand: "MSI",
-            model: "MAG 274QRFW",
-            size: 27,
-            panel: "Rapid IPS",
-            resolution: "2K QHD",
-            refreshRate: "180Hz",
-            price: 6990,
-            monthlySales: 2800,
-            expertReviewScore: 8.5
-        },
-        {
-            id: 7,
-            rank2026: 7,
-            brand: "ViewSonic",
-            model: "VX2416",
-            size: 24,
-            panel: "IPS",
-            resolution: "1080P FHD",
-            refreshRate: "100Hz",
-            price: 2988,
-            monthlySales: 5200,
-            expertReviewScore: 7.9
-        },
-        {
-            id: 8,
-            rank2026: 8,
-            brand: "DELL",
-            model: "UltraSharp U2724DE",
-            size: 27,
-            panel: "IPS Black",
-            resolution: "2K QHD",
-            refreshRate: "120Hz",
-            price: 15900,
-            monthlySales: 950,
-            expertReviewScore: 9.2
-        }
-    ];
-
-    /**
-     * 核心演算法：系統智慧綜合評分計算
-     * 邏輯：考慮銷量(30%)、價格高低C/P值(30%)、專家評測硬體分(40%)進行加權計算，滿分10分
-     */
-    function calculateSystemScore(monitor) {
-        // 1. 銷量評分 (以最高銷量 5200 台為基準進行常態化)
-        const salesScore = (monitor.monthlySales / 5200) * 10;
+    <!-- 主體內容 -->
+    <main class="container mx-auto px-4 py-8">
         
-        // 2. 價格性價比評分 (價格越低，基礎高CP分越高；此處採對數反向計算)
-        let priceScore = 10 - (monitor.price / 50000) * 10;
-        if(priceScore < 2) priceScore = 2; // 給予基本分
+        <!-- 篩選與排序工具列 -->
+        <section class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8 flex flex-wrap gap-4 items-center justify-between">
+            <div class="flex flex-wrap gap-4">
+                <!-- 尺寸篩選 -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 mb-1">螢幕大小</label>
+                    <select id="sizeFilter" onchange="fetchMonitors()" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        <option value="all">全部尺寸</option>
+                        <option value="24">24 吋</option>
+                        <option value="27">27 吋</option>
+                        <option value="32">32 吋</option>
+                        <option value="34">34 吋以上</option>
+                    </select>
+                </div>
+                <!-- 排序規則 -->
+                <div>
+                    <label class="block text-xs font-semibold text-gray-400 mb-1">排序依據</label>
+                    <select id="sortBy" onchange="fetchMonitors()" class="bg-gray-700 border border-gray-600 rounded px-3 py-1.5 text-sm text-white focus:outline-none focus:border-blue-500">
+                        <option value="rank">2026 綜合排名</option>
+                        <option value="price_asc">價格：由低到高</option>
+                        <option value="price_desc">價格：由高到低</option>
+                        <option value="sales">銷量：由高到低</option>
+                        <option value="score">系統評分：由高到低</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-xs text-gray-400 bg-gray-900 px-3 py-2 rounded border border-gray-700">
+                💡 系統評分演算法：綜合解析度、更新率、面板與價格權衡計算。
+            </div>
+        </section>
 
-        // 3. 專家評分
-        const expertScore = monitor.expertReviewScore;
+        <!-- 螢幕列表展示區 -->
+        <section id="monitorList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- 這裡會透過 JavaScript 動態渲染後端數據 -->
+        </section>
+    </main>
 
-        // 加權總分
-        const totalScore = (salesScore * 0.3) + (priceScore * 0.3) + (expertScore * 0.4);
-        return totalScore.toFixed(1);
-    }
+    <!-- 前端動態交互 JavaScript -->
+    <script>
+        const API_URL = 'http://127.0.0';
 
-    // 網頁動態渲染主程式
-    function renderMonitors() {
+        async function fetchMonitors() {
+            const size = document.getElementById('sizeFilter').value;
+            const sort = document.getElementById('sortBy').value;
+            const monitorList = document.getElementById('monitorList');
+            
+            // 清空舊數據並顯示載入中
+            monitorList.innerHTML = '<p class="text-center text-gray-400 col-span-full">數據載入中...</p>';
+
+            try {
+                // 向 Python 後端發送帶有篩選與排序參數的請求
+                const response = await fetch(`${API_URL}?size=${size}&sort=${sort}`);
+                const data = await response.json();
+
+                if (data.length === 0) {
+                    monitorList.innerHTML = '<p class="text-center text-gray-400 col-span-full">查無符合條件的螢幕</p>';
+                    return;
+                }
+
+                // 動態生成螢幕卡片 HTML
+                monitorList.innerHTML = data.map((monitor, index) => `
+                    <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 shadow-lg hover:border-blue-500 transition duration-300 relative flex flex-col justify-between">
+                        <!-- 2026 排名標籤 -->
+                        <div class="absolute top-3 left-3 bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow-md">
+                            2026 排名 #${monitor.rank_2026}
+                        </div>
+                        
+                        <!-- 內文資訊 -->
+                        <div class="p-6 pt-12">
+                            <h3 class="text-lg font-bold text-white mb-1 line-clamp-1">${monitor.name}</h3>
+                            <p class="text-xs text-gray-400 mb-4">${monitor.panel} | ${monitor.resolution} | ${monitor.refresh_rate}</p>
+                            
+                            <!-- 主要規格 -->
+                            <div class="grid grid-cols-3 gap-2 text-center bg-gray-900 p-3 rounded-lg text-sm mb-4">
+                                <div>
+                                    <span class="block text-xs text-gray-500">尺寸</span>
+                                    <span class="font-semibold text-blue-400">${monitor.size} 吋</span>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-gray-500">月銷量</span>
+                                    <span class="font-semibold text-green-400">${monitor.sales.toLocaleString()} 筆</span>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-gray-500">系統評分</span>
+                                    <span class="font-semibold text-yellow-400">${monitor.system_score} / 100</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 底部價格與評分 -->
+                        <div class="bg-gray-750 px-6 py-4 border-t border-gray-700 flex items-center justify-between bg-gray-850">
+                            <div>
+                                <span class="text-xs text-gray-400 block">促銷價</span>
+                                <span class="text-xl font-black text-rose-500">NT$ ${monitor.price.toLocaleString()}</span>
+                            </div>
+                            <button class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold py-2 px-4 rounded transition">
+                                查看詳細評測
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+
+            } catch (error) {
+                console.error("無法取得後端數據:", error);
+                monitorList.innerHTML = '<p class="text-center text-rose-400 col-span-full">後端伺服器連接失敗，請確認 Flask 是否啟動。</p>';
+            }
+        }
+
+        // 網頁開啟時自動載入數據
+        window.onload = fetchMonitors;
+    </script>
+</body>
+</html>
